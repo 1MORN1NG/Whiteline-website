@@ -10,6 +10,8 @@ module.exports = {
       black: "#000000",
       white: "#FFFFFF",
       void: "#080808",
+      silver: "#C0C0C0",
+      glass: "rgba(0,0,0,0.6)",
       transparent: "transparent",
       current: "currentColor",
     },
