@@ -33,17 +33,22 @@ export default function HeroSection() {
   const { scrollY } = useScroll();
 
   const overlayOpacity = useTransform(scrollY, [0, 500], [1, 0]);
-  const overlayBlur = useTransform(scrollY, [0, 500], ["20px", "0px"]);
+  const overlayBlur = useTransform(scrollY, [0, 500], ["blur(20px)", "blur(0px)"]);
+
+  // Text reveal effects
+  const textOpacity = useTransform(scrollY, [0, 300], [0.3, 1]);
+  const textBlur = useTransform(scrollY, [0, 300], ["blur(10px)", "blur(0px)"]);
 
   const t = content[lang];
 
   return (
     <section
       id="HERO_GLOBAL_01"
-      className="relative h-screen w-full overflow-hidden bg-black"
+      className="relative h-[200vh] w-full bg-black"
     >
-      {/* Background Layer */}
-      <div className="absolute inset-0 z-0 flex">
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        {/* Background Layer */}
+        <div className="absolute inset-0 z-0 flex">
         {/* Left: Gritty Texture */}
         <div className="w-1/2 h-full bg-black relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
@@ -74,29 +79,37 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Shake Wrapper */}
+      {/* Shake Wrapper + Content Reveal */}
       <motion.div
         className="relative z-10 w-full h-full"
         animate={shake ? { x: [-2, 2, -2, 0] } : {}}
         transition={{ duration: 0.2 }}
+        style={{ opacity: textOpacity, filter: textBlur as any }}
       >
         {/* Foreground Grid */}
         <div className="grid grid-cols-1 md:grid-cols-[60%_40%] h-full">
           {/* Left Column */}
-          <div className="flex flex-col justify-center px-8 md:px-16 pt-20">
+          <div className="flex flex-col justify-center pl-8 md:pl-32 pr-8 pt-20">
             <div className="mb-8">
               <LightningW onAnimationComplete={() => setShake(true)} />
             </div>
 
             <h1 className="font-heading font-black text-7xl md:text-9xl leading-[0.9] text-white -ml-8 md:-ml-20 tracking-tighter">
-              {t.headlineStart}{" "}
+              {/* TRANSFORMING: Outlined */}
+              <span className="text-transparent font-outline-1 md:font-outline-2">
+                {t.headlineStart}
+              </span>{" "}
+
+              {/* PRESENCE: Filled White */}
+              <span className="text-white block md:inline">
+                {t.headlineGlitch}
+              </span>{" "}
+
+              {/* INTO PROFIT: Glitching */}
               <GlitchText
-                text={t.headlineGlitch}
-                className="text-transparent font-outline-1 md:font-outline-2 cursor-pointer"
-              />{" "}
-              <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">
-                {t.headlineEnd}
-              </span>
+                text={t.headlineEnd}
+                className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] block md:inline"
+              />
             </h1>
 
             <p className="mt-8 text-silver font-body text-lg md:text-xl max-w-xl">
@@ -151,11 +164,12 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Luminance Transition Overlay */}
-      <motion.div
-        className="absolute inset-0 z-0 bg-black pointer-events-none"
-        style={{ opacity: overlayOpacity, backdropFilter: overlayBlur as any }}
-      />
+        {/* Luminance Transition Overlay */}
+        <motion.div
+          className="absolute inset-0 z-0 bg-black pointer-events-none"
+          style={{ opacity: overlayOpacity, backdropFilter: overlayBlur as any }}
+        />
+      </div>
     </section>
   );
 }
