@@ -10,7 +10,7 @@ export default function LightningW({ onAnimationComplete }: LightningWProps) {
   return (
     <svg
       viewBox="0 0 100 100"
-      className="w-24 h-24 stroke-white fill-none drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+      className="w-24 h-24 stroke-white fill-none drop-shadow-[0_0_15px_rgba(255,255,255,0.7)]"
     >
       <motion.path
         id="lightning-w"
@@ -19,7 +19,7 @@ export default function LightningW({ onAnimationComplete }: LightningWProps) {
         strokeDasharray="400"
         strokeDashoffset="400"
         animate={{ strokeDashoffset: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
         onAnimationComplete={onAnimationComplete}
       />
     </svg>
